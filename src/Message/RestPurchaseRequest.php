@@ -227,17 +227,26 @@ class RestPurchaseRequest extends RestAuthorizeRequest
     const SHIPPING_PREFERENCE_GET_FROM_FILE = 'GET_FROM_FILE';
     const SHIPPING_PREFERENCE_SET_PROVIDED_ADDRESS= 'SET_PROVIDED_ADDRESS';
 
+    const USER_ACTION_COMMIT = 'COMMIT';
+    const USER_ACTION_CONTINUE= 'CONTINUE';
+
     public function getData()
     {
         $data = parent::getData();
         $data['intent'] = 'sale';
         $data['application_context']['shipping_preference'] = $this->getShippingPreference();
+        $data['application_context']['user_action'] = $this->getUserAction();
         return $data;
     }
 
     public function getShippingPreference()
     {
         return $this->getParameter('shippingPreference');
+    }
+
+    public function getUserAction()
+    {
+        return $this->getParameter('userAction');
     }
 
     /**
@@ -259,5 +268,10 @@ class RestPurchaseRequest extends RestAuthorizeRequest
     public function setShippingPreference($value)
     {
         return $this->setParameter('shippingPreference', $value);
+    }
+
+    public function setUserAction($value)
+    {
+        return $this->setParameter('userAction', $value);
     }
 }
